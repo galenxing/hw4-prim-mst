@@ -34,7 +34,12 @@ def check_mst(adj_mat: np.ndarray,
         for j in range(i+1):
             total += mst[i, j]
     assert approx_equal(total, expected_weight), 'Proposed MST has incorrect expected weight'
-
+    
+    # should be symmetric matrix because we are assuming undirected graph
+    assert (mst==mst.T).all()
+    
+    # number of edges should be number of nodes minus 1
+    assert np.sum(mst!=0)/2 == (adj_mat.shape[0]-1)
 
 def test_mst_small():
     """
@@ -71,4 +76,8 @@ def test_mst_student():
     TODO: Write at least one unit test for MST construction.
     
     """
-    pass
+    file_path = './data/student.csv'
+    g = Graph(file_path)
+    g.construct_mst()
+    check_mst(g.adj_mat, g.mst, 11)
+
