@@ -73,7 +73,7 @@ def test_mst_single_cell_data():
 def test_mst_student():
     """
     
-    TODO: Write at least one unit test for MST construction.
+    Unit test on my own dataset. MST total weight should be 11
     
     """
     file_path = './data/student.csv'
