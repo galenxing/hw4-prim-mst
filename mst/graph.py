@@ -41,4 +41,28 @@ class Graph:
         `heapify`, `heappop`, and `heappush` functions.
 
         """
-        self.mst = None
+        
+        amat = np.zeros_like(self.adj_mat)
+        visited = []
+        h = []
+
+        # visit the first node and initialize priority queue
+        visited.append(0)
+        for j, weight in enumerate(self.adj_mat[0]):
+            if weight != 0:
+                heapq.heappush(h, (weight, 0, j))
+
+        # loop through the queue until you've visited all the nodes
+        while len(visited) < self.adj_mat.shape[0]:
+            w, i, j = heapq.heappop(h)
+            if j not in visited:
+                visited.append(j)
+                amat[i][j] = w
+                amat[j][i] = w
+                
+                # add destinations for node you just visited
+                for k, weight in enumerate(self.adj_mat[j]):
+                    if weight != 0:
+                        heapq.heappush(h, (weight, j, k))
+                        
+        self.mst = amat
